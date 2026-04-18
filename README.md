@@ -1,15 +1,15 @@
 # SMM4H-HeaRD 2026 Task 1: Multilingual ADE Detection
 
-**Team Paradise** | System Description Paper + Code
+**Team Paradise** | Threshold-Only Ablation Study
 
-[![Paper](https://img.shields.io/badge/Paper-ACL%20Format-blue)](paper/main.pdf)
+[![Paper](https://img.shields.io/badge/Paper-ACL%20Format-blue)](https://github.com/DhruvGoyal404/SMM4H_TASK1)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.8+-orange.svg)](https://www.python.org/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-red.svg)](https://pytorch.org/)
 
 ## 📋 Overview
 
-This repository contains our submission to the **SMM4H-HeaRD 2026 Shared Task, Task 1**: Binary classification of social media posts for Adverse Drug Event (ADE) mentions across **7 languages** (German, French, Russian, English, Mandarin, Japanese) with **zero-shot transfer to Farsi**.
+Our submission to **SMM4H-HeaRD 2026 Shared Task, Task 1**: Binary classification of social media posts for Adverse Drug Event (ADE) mentions across **7 languages** (German, French, Russian, English, Mandarin, Japanese) with **zero-shot transfer to Farsi**.
 
 **Key Contribution:** We demonstrate that **threshold calibration alone** yields +0.050 macro F1 improvement (from 0.547 → 0.597) on a frozen XLM-RoBERTa model — larger than many encoder-level ablations reported in literature.
 
@@ -22,26 +22,12 @@ This repository contains our submission to the **SMM4H-HeaRD 2026 Shared Task, T
 | Field Median | 0.580 | +0.017 above |
 | Japanese (ja) | 0.609 | **+0.075** 🔥 |
 | Zero-shot Farsi (fa) | 0.408 | **+0.041** 🚀 |
-| German (de) | 0.610 | -0.054 |
-| French (fr) | 0.634 | -0.047 |
-
----
-
-## 🎯 Task Description
-
-**Input:** Social media post in any target language  
-**Output:** Binary label (1 = contains ADE mention, 0 = no ADE)  
-**Challenge:**
-- Severe class imbalance (2.4% to 60% positive rates)
-- Platform diversity (Twitter/X vs. patient forums vs. drug reviews)
-- Zero-shot Farsi evaluation (no training data)
-- Unweighted macro-F1 across 9 test splits
 
 ---
 
 ## 🏗️ System Architecture
 
-![Methodology Pipeline](figures/methodology_diagram.png)
+![Methodology Pipeline](methodology_diagram.png)
 
 **3-Stage Pipeline:**
 
@@ -53,18 +39,9 @@ This repository contains our submission to the **SMM4H-HeaRD 2026 Shared Task, T
 
 ## 🚀 Quick Start
 
-### Prerequisites
-
-```bash
-Python 3.8+
-CUDA-capable GPU (we used RTX 4090, 24GB)
-```
-
 ### Installation
 
 ```bash
-git clone https://github.com/DhruvGoyal404/SMM4H_TASK1.git
-cd SMM4H_TASK1
 pip install -r requirements.txt
 ```
 
@@ -81,7 +58,7 @@ SMM4H_TASK1/
 └── combined_test_data_unlabeled.csv
 ```
 
-### Training
+### Training & Inference
 
 Run the complete pipeline (data prep → training → inference → submission):
 
@@ -95,11 +72,11 @@ Or execute all cells programmatically:
 jupyter nbconvert --to notebook --execute code.ipynb
 ```
 
-**Training Time:** ~35 minutes on RTX 4090
+**Training Time:** ~35 minutes on NVIDIA RTX 4090 (24GB)
 
 **Output Files:**
 - `best_model.pt` — trained model checkpoint
-- `test_probs.npy` — raw probability scores for test set
+- `test_probs.npy` — raw probability scores
 - `submission.csv` — predictions in CodaBench format
 - `submission.zip` — ready for upload
 
@@ -143,21 +120,14 @@ We hold the trained model **completely frozen** and ablate only the decision thr
 
 ```
 SMM4H_TASK1/
-├── code.ipynb                  # Main training + inference notebook
-├── requirements.txt            # Python dependencies
 ├── README.md                   # This file
-├── LICENSE                     # MIT License
-├── paper/
-│   ├── main.tex               # ACL-format paper source
-│   ├── custom.bib             # Bibliography
-│   └── main.pdf               # Compiled paper
-├── figures/
-│   └── methodology_diagram.png # System architecture diagram
-└── submissions/
-    ├── submission_v1.csv      # V1 predictions (F1=0.547)
-    ├── submission_v2.csv      # V2 predictions (F1=0.575)
-    └── submission_v3.csv      # V3 predictions (F1=0.597, BEST)
+├── code.ipynb                  # Main training + inference notebook (12 cells)
+├── requirements.txt            # Python dependencies
+├── methodology_diagram.png     # System architecture diagram
+└── .gitignore                  # Excludes data/models/outputs
 ```
+
+**Note:** Training/test data files are excluded via `.gitignore` (too large, proprietary from organizers). Download from [CodaBench](https://www.codabench.org/competitions/14124/).
 
 ---
 
@@ -165,16 +135,10 @@ SMM4H_TASK1/
 
 Our system description paper is submitted to the **SMM4H-HeaRD 2026 Workshop** (co-located with a major NLP conference).
 
-**Read the paper:** [`paper/main.pdf`](paper/main.pdf)
-
-**Compile from source:**
-```bash
-cd paper/
-pdflatex main.tex
-bibtex main
-pdflatex main.tex
-pdflatex main.tex
-```
+**Key findings:**
+- Threshold calibration alone: +0.050 F1 (larger than typical encoder ablations)
+- Zero-shot Farsi: +0.041 vs. field mean (no training data)
+- Platform matters: Twitter needs τ=0.10–0.23, forums need τ=0.40–0.79
 
 ---
 
@@ -190,7 +154,6 @@ pdflatex main.tex
 
 1. **Dev Set Contamination:** Merging dev into training destroyed calibration signal (F1 inflated to 0.997)
 2. **Forum Over-prediction:** German/French patient forums under-performed (predicted 8–13% positive but test prior was tighter)
-3. **Farsi MT Baseline:** Authentication issues blocked Helsinki-NLP translation comparison
 
 ### Lessons for Future Participants 💡
 
@@ -215,8 +178,9 @@ pdflatex main.tex
 If you use this code or find our work helpful, please cite:
 
 ```bibtex
-@inproceedings{paradise-smm4h2026,
-  title     = {Team Paradise at SMM4H-HeaRD 2026: Multilingual Adverse Drug Event Detection with XLM-RoBERTa and Threshold-Only Ablation},
+@inproceedings{goyal-smm4h2026,
+  title     = {Team Paradise at SMM4H-HeaRD 2026: Multilingual Adverse Drug Event 
+               Detection with XLM-RoBERTa and Threshold-Only Ablation},
   author    = {Goyal, Dhruv},
   booktitle = {Proceedings of the Social Media Mining for Health Workshop (SMM4H-HeaRD)},
   year      = {2026},
