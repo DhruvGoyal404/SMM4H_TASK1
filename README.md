@@ -3,17 +3,16 @@
 **Team Paradise** | Threshold-Only Ablation Study
 
 [![Paper](https://img.shields.io/badge/Paper-ACL%20Format-blue)](https://github.com/DhruvGoyal404/SMM4H_TASK1)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.8+-orange.svg)](https://www.python.org/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-red.svg)](https://pytorch.org/)
 
-## 📋 Overview
+## Overview
 
 Our submission to **SMM4H-HeaRD 2026 Shared Task, Task 1**: Binary classification of social media posts for Adverse Drug Event (ADE) mentions across **7 languages** (German, French, Russian, English, Mandarin, Japanese) with **zero-shot transfer to Farsi**.
 
 **Key Contribution:** We demonstrate that **threshold calibration alone** yields +0.050 macro F1 improvement (from 0.547 → 0.597) on a frozen XLM-RoBERTa model — larger than many encoder-level ablations reported in literature.
 
-### 🏆 Results
+### Results
 
 | Metric | Value | vs. Field |
 |--------|-------|-----------|
@@ -25,7 +24,7 @@ Our submission to **SMM4H-HeaRD 2026 Shared Task, Task 1**: Binary classificatio
 
 ---
 
-## 🏗️ System Architecture
+## System Architecture
 
 ![Methodology Pipeline](methodology_diagram.png)
 
@@ -37,7 +36,7 @@ Our submission to **SMM4H-HeaRD 2026 Shared Task, Task 1**: Binary classificatio
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Installation
 
@@ -82,7 +81,7 @@ jupyter nbconvert --to notebook --execute code.ipynb
 
 ---
 
-## 📊 Methodology
+## Methodology
 
 ### Model
 
@@ -114,24 +113,11 @@ We hold the trained model **completely frozen** and ablate only the decision thr
 
 **Key Insight:** Platform type (Twitter vs. forums) drives threshold selection more than language alone.
 
----
-
-## 📁 Repository Structure
-
-```
-SMM4H_TASK1/
-├── README.md                   # This file
-├── code.ipynb                  # Main training + inference notebook (12 cells)
-├── requirements.txt            # Python dependencies
-├── methodology_diagram.png     # System architecture diagram
-└── .gitignore                  # Excludes data/models/outputs
-```
-
 **Note:** Training/test data files are excluded via `.gitignore` (too large, proprietary from organizers). Download from [CodaBench](https://www.codabench.org/competitions/14124/).
 
 ---
 
-## 📝 Paper
+## Paper
 
 Our system description paper is submitted to the **SMM4H-HeaRD 2026 Workshop** (co-located with a major NLP conference).
 
@@ -142,26 +128,26 @@ Our system description paper is submitted to the **SMM4H-HeaRD 2026 Workshop** (
 
 ---
 
-## 🔑 Key Findings
+## Key Findings
 
-### What Worked ✅
+### What Worked 
 
 1. **XLM-R for Zero-Shot:** Strong Farsi performance (+0.041 vs. mean) with no training data
 2. **Focal Loss:** Prevents early convergence to majority class at 2–10% imbalance
 3. **Threshold Calibration:** +0.050 F1 gain with zero model changes
 
-### What Didn't Work ❌
+### What Didn't Work 
 
 1. **Dev Set Contamination:** Merging dev into training destroyed calibration signal (F1 inflated to 0.997)
 2. **Forum Over-prediction:** German/French patient forums under-performed (predicted 8–13% positive but test prior was tighter)
 
-### Lessons for Future Participants 💡
+### Lessons for Future Participants
 
 **Keep validation split separate when thresholds are part of your pipeline.** Merging dev into training eliminates the very signal needed for post-hoc calibration.
 
 ---
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - **SMM4H-HeaRD 2026 Organizers** for the shared task and data
 - **Hugging Face** for the Transformers library
@@ -173,7 +159,7 @@ Our system description paper is submitted to the **SMM4H-HeaRD 2026 Workshop** (
 
 ---
 
-## 📜 Citation
+## Citation
 
 If you use this code or find our work helpful, please cite:
 
@@ -187,21 +173,3 @@ If you use this code or find our work helpful, please cite:
   publisher = {Association for Computational Linguistics}
 }
 ```
-
----
-
-## 📧 Contact
-
-**Dhruv Goyal**  
-BTECH CSE, TIET Patiala  
-GitHub: [@DhruvGoyal404](https://github.com/DhruvGoyal404)
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-**Built with ❤️ for multilingual health NLP**
