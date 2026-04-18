@@ -1,0 +1,22 @@
+# SMM4H-HeaRD 2026 Task 1 - Python Dependencies
+
+# Core ML/DL
+torch>=2.0.0
+transformers>=4.30.0
+numpy>=1.24.0
+pandas>=2.0.0
+scikit-learn>=1.3.0
+
+# Tokenization
+sentencepiece>=0.1.99
+sacremoses>=0.0.53
+
+# Training utilities
+tqdm>=4.65.0
+
+# Notebook support (optional)
+jupyter>=1.0.0
+ipykernel>=6.25.0
+
+# Note: Install PyTorch with CUDA support for GPU training
+# Visit https://pytorch.org/get-started/locally/ for CUDA-specific installation

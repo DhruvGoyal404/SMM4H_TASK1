@@ -1,0 +1,116 @@
+# SMM4H-HeaRD 2026 Task 1 - Git Ignore Rules
+
+# ============================================================================
+# Data files (from CodaBench, proprietary/too large)
+# ============================================================================
+train_data_*.csv
+dev_data_*.csv
+combined_test_data_unlabeled.csv
+
+# ============================================================================
+# Model checkpoints (too large for GitHub, 500MB+)
+# ============================================================================
+*.pt
+*.pth
+*.bin
+best_model.pt
+pytorch_model.bin
+
+# ============================================================================
+# Intermediate outputs
+# ============================================================================
+*.npy
+*.npz
+submission.zip
+test_probs.npy
+test_ids.npy
+test_langs.npy
+
+# ============================================================================
+# Python
+# ============================================================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# ============================================================================
+# LaTeX build artifacts
+# ============================================================================
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
+*.toc
+*.synctex.gz
+*.fdb_latexmk
+*.fls
+*.nav
+*.snm
+*.vrb
+
+# ============================================================================
+# Operating System
+# ============================================================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# ============================================================================
+# IDE / Editor
+# ============================================================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ============================================================================
+# Logs and databases
+# ============================================================================
+*.log
+*.sql
+*.sqlite
+
+# ============================================================================
+# KEEP these files (override above rules if needed)
+# ============================================================================
+!requirements.txt
+!submissions/*.csv
